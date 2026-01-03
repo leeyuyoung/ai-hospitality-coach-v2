@@ -1,0 +1,55 @@
+import { Scenario, ReportData } from '@/types/diagnosis';
+
+export const generateMockScenarios = (): Scenario[] => [
+  {
+    id: 'conservative',
+    name: '안정형',
+    estimatedCost: { min: 180000000, max: 250000000 },
+    monthlyRevenue: { min: 12000000, max: 18000000 },
+    suggestedRooms: 12,
+    adr: { peak: 120000, offPeak: 85000 },
+    occupancy: { peak: 85, offPeak: 55 },
+    riskLevel: 'low',
+    operationDifficulty: 'easy',
+    keyRisk: '초기 인지도 확보 기간 필요',
+    moodDescription: '심플하고 깔끔한 미니멀 인테리어로 유지보수 용이',
+    monthlyProfit: { min: 4500000, max: 7500000 },
+    riskScore: 25,
+  },
+  {
+    id: 'balanced',
+    name: '균형형',
+    estimatedCost: { min: 280000000, max: 380000000 },
+    monthlyRevenue: { min: 20000000, max: 28000000 },
+    suggestedRooms: 15,
+    adr: { peak: 150000, offPeak: 100000 },
+    occupancy: { peak: 80, offPeak: 50 },
+    riskLevel: 'medium',
+    operationDifficulty: 'medium',
+    keyRisk: '시즌별 매출 편차, 마케팅 비용 증가',
+    moodDescription: '트렌디한 감성과 편의성을 갖춘 복합 컨셉',
+    monthlyProfit: { min: 7000000, max: 12000000 },
+    riskScore: 50,
+  },
+  {
+    id: 'aggressive',
+    name: '성장형',
+    estimatedCost: { min: 420000000, max: 580000000 },
+    monthlyRevenue: { min: 32000000, max: 45000000 },
+    suggestedRooms: 20,
+    adr: { peak: 180000, offPeak: 120000 },
+    occupancy: { peak: 75, offPeak: 45 },
+    riskLevel: 'high',
+    operationDifficulty: 'hard',
+    keyRisk: '높은 초기 투자, 경쟁 심화 시 수익성 저하',
+    moodDescription: '프리미엄 럭셔리 컨셉으로 고단가 전략',
+    monthlyProfit: { min: 10000000, max: 18000000 },
+    riskScore: 75,
+  },
+];
+
+export const generateMockReport = (): ReportData => ({
+  scenarios: generateMockScenarios(),
+  recommendation: '현재 예산과 입지 기준으로는 \'안정형 시나리오\'가 가장 안정적입니다. 초기 리스크를 최소화하면서 운영 노하우를 쌓은 후 확장을 검토하시는 것을 추천드립니다.',
+  createdAt: new Date(),
+});
