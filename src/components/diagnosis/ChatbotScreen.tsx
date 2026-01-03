@@ -246,10 +246,11 @@ const ChatbotScreen = ({ diagnosisData, onUpdateData, onComplete, onBack }: Chat
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <Building2 className="w-5 h-5 text-primary-foreground" />
-              </div>
-              <span className="font-semibold text-foreground hidden sm:block">스페이스플래닝</span>
+              <img 
+                src="/logo_text.svg" 
+                alt="SPACE PLANNING" 
+                className="h-7"
+              />
             </div>
             <div className="h-6 w-px bg-border hidden sm:block" />
             <div>

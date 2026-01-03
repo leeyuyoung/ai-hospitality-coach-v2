@@ -189,15 +189,12 @@ const LandingScreen = ({ onStart }: LandingScreenProps) => {
             약 3~5분 소요 · 무료 · 회원가입 불필요
           </p>
 
-          <a
-            href="https://spaceplanning.co.kr/contact"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-block px-8 py-3 text-white/90 border border-white/30 rounded-full bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 text-sm font-medium animate-fade-in"
+          <button
+            className="mt-6 inline-block px-8 py-3 text-white/90 border border-white/30 rounded-full bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 text-sm font-medium animate-fade-in cursor-default"
             style={{ animationDelay: '0.4s' }}
           >
             진단 없이 전문가 문의
-          </a>
+          </button>
         </div>
       </main>
 

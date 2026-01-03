@@ -84,10 +84,11 @@ export const requiredQuestions: ChatMessage[] = [
     content: '건물 연면적은 대략 어느 정도인가요?',
     options: [
       { label: '후보 탐색 중', value: 'searching' },
+      { label: '50평 미만', value: 'under-50' },
+      { label: '50~100평', value: '50-100' },
       { label: '100~200평', value: '100-200' },
       { label: '200~400평', value: '200-400' },
-      { label: '400~800평', value: '400-800' },
-      { label: '800평 이상', value: '800+' },
+      { label: '400평 이상', value: '400+' },
     ],
     inputType: 'chip',
     field: 'scale.area',
