@@ -86,7 +86,7 @@ export async function generateDiagnosisReport(
             }
             
             중요 규칙:
-            1. 시나리오는 3-5개를 생성하며, 각 시나리오는 예산, 규모, 리스크 수준이 다르게 설정되어야 합니다.
+            1. 시나리오는 반드시 정확히 3개를 생성해야 합니다. 각 시나리오는 예산, 규모, 리스크 수준이 다르게 설정되어야 합니다.
             2. 모든 숫자는 한국 원화 기준이며, 현실적이고 보수적으로 계산해야 합니다.
             3. estimatedCost는 사용자가 입력한 예산 범위 내에서 제시해야 합니다. 사용자 예산을 반드시 확인하고 그 범위 내에서 현실적인 공사비를 계산하세요.
                - 예를 들어 사용자 예산이 5억~15억원이면:
@@ -203,8 +203,78 @@ export async function generateDiagnosisReport(
       };
     });
 
+    // 시나리오가 3개 미만이면 기본 시나리오 추가 (fallback)
+    if (scenarios.length < 3) {
+      console.warn(`시나리오가 ${scenarios.length}개만 생성되었습니다. 기본 시나리오를 추가합니다.`);
+      const range = budgetRange.max - budgetRange.min;
+      const defaultScenarios = [
+        {
+          id: 'conservative',
+          name: '안정형',
+          estimatedCost: { 
+            min: budgetRange.min + Math.floor(range * 0.1), 
+            max: budgetRange.min + Math.floor(range * 0.3) 
+          },
+          monthlyRevenue: { min: 5000000, max: 8000000 },
+          monthlyProfit: { min: 2000000, max: 4000000 },
+          suggestedRooms: 8,
+          adr: { peak: 80000, offPeak: 60000 },
+          occupancy: { peak: 70, offPeak: 50 },
+          riskLevel: 'low' as const,
+          operationDifficulty: 'easy' as const,
+          keyRisk: '초기 투자비 회수 기간이 길 수 있음',
+          moodDescription: '편안하고 안정적인 분위기',
+          riskScore: 30,
+        },
+        {
+          id: 'balanced',
+          name: '균형형',
+          estimatedCost: { 
+            min: budgetRange.min + Math.floor(range * 0.35), 
+            max: budgetRange.min + Math.floor(range * 0.65) 
+          },
+          monthlyRevenue: { min: 8000000, max: 12000000 },
+          monthlyProfit: { min: 3500000, max: 6000000 },
+          suggestedRooms: 10,
+          adr: { peak: 100000, offPeak: 70000 },
+          occupancy: { peak: 75, offPeak: 55 },
+          riskLevel: 'medium' as const,
+          operationDifficulty: 'medium' as const,
+          keyRisk: '경쟁 치열 지역의 경우 점유율 확보 어려움',
+          moodDescription: '모던하고 트렌디한 분위기',
+          riskScore: 50,
+        },
+        {
+          id: 'aggressive',
+          name: '성장형',
+          estimatedCost: { 
+            min: budgetRange.min + Math.floor(range * 0.7), 
+            max: budgetRange.max - Math.floor(range * 0.1) 
+          },
+          monthlyRevenue: { min: 12000000, max: 18000000 },
+          monthlyProfit: { min: 5000000, max: 9000000 },
+          suggestedRooms: 12,
+          adr: { peak: 120000, offPeak: 80000 },
+          occupancy: { peak: 80, offPeak: 60 },
+          riskLevel: 'high' as const,
+          operationDifficulty: 'hard' as const,
+          keyRisk: '높은 초기 투자와 운영 비용 부담',
+          moodDescription: '럭셔리하고 프리미엄한 분위기',
+          riskScore: 70,
+        },
+      ];
+      
+      // 기존 시나리오와 기본 시나리오를 병합 (중복 제거)
+      const existingIds = new Set(scenarios.map(s => s.id));
+      const additionalScenarios = defaultScenarios.filter(s => !existingIds.has(s.id));
+      scenarios.push(...additionalScenarios);
+      
+      // 3개로 제한
+      scenarios.splice(3);
+    }
+
     return {
-      scenarios,
+      scenarios: scenarios.slice(0, 3), // 최대 3개까지만 반환
       recommendation: parsedData.recommendation || '추가 분석이 필요합니다.',
       createdAt: new Date(),
     };
