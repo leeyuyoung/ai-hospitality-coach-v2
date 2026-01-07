@@ -55,6 +55,10 @@ const ReportPreview = ({ reportData, onBookConsultation }: ReportPreviewProps) =
           <p className="text-muted-foreground mt-2">
             입력하신 정보를 바탕으로 3가지 시나리오를 분석했습니다
           </p>
+          <div className="mt-4 text-xs text-primary/70 space-y-1">
+            <p>* 본 리포트의 수치 및 이미지는 입력 조건과 가정값을 바탕으로 생성된 예시입니다.</p>
+            <p>* 실제 적용 시에는 현장 조건과 설계 방향에 따라 달라질 수 있습니다.</p>
+          </div>
         </div>
       </header>
 
